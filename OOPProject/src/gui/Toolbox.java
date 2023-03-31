@@ -50,6 +50,7 @@ public class Toolbox extends JPanel {
 		clearButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 9));
 		
 		
+		
 		this.add(squareButton);
 		this.add(drawButton);
 		this.add(circleButton);
@@ -61,7 +62,15 @@ public class Toolbox extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				canvas.setShape(((JButton) e.getSource()).getText()); //instead of typecast try instance of
+				
+				JColorChooser chooser = new JColorChooser();
+				@SuppressWarnings("static-access")
+				Color color = chooser.showDialog(null, "Color", Color.BLACK);
+				
+				
+				canvas.setShape(((JButton) e.getSource()).getText());
+				canvas.setColor(color);
+				
 			}
 			
 		};

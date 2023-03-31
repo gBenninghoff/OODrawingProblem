@@ -11,6 +11,8 @@ public class Canvas extends JPanel {
 
 	private String shape;
 	private BufferedImage image;
+	private Color color;
+
 
 	private MouseListener ml = new MouseListener() {
 
@@ -22,13 +24,16 @@ public class Canvas extends JPanel {
 		public void mousePressed(MouseEvent e) {
 			switch (shape) {
 			case "Circle":
-				drawCircle(e.getX(), e.getY());
-				break;
+					Circle circle = new Circle(e.getX()-50, e.getY()-50, 100, 100);
+//					circle.draw(getGraphics(), color);
+					//stack.
+					break;
 			case "Square":
-				drawSquare(e.getX(), e.getY());
-				break;
+					Square square = new Square(e.getX()-50, e.getY()-50, 100, 100);
+//					square.draw(getGraphics(), color);
+					break;
 			case "Triangle":
-				drawTriangle(e.getX(), e.getY());
+					
 			default:
 				break;
 			}
@@ -36,7 +41,6 @@ public class Canvas extends JPanel {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
@@ -60,38 +64,28 @@ public class Canvas extends JPanel {
 		this.setLayout(null);
 
 	}
-	
-//	@Override
-//	public void paintComponent(Graphics g) {
-//		super.paintComponent(g);
-//		g.setColor(Color.BLACK);
-//		g.drawRect(1, 1, this.getWidth()-2, this.getHeight()-2);
-//		if(image == null) {
-//			image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
-//			
-//		}
-//	}
 
 	public void setShape(String shape) {
 		this.shape = shape;
 	}
-
-	public void drawCircle(int x, int y) {
-		Graphics g = this.getGraphics();
-		g.setColor(Color.red);
-		g.drawOval(x-50, y-50, 100, 100);
+	
+	public Color getColor() {
+		return color;
 	}
 
-	public void drawSquare(int x, int y) {
-		Graphics g = this.getGraphics();
-		g.setColor(Color.red);
-		g.drawRect(x-50, y-50, 100, 100);
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
-	public void drawTriangle(int x, int y) {
-		Graphics g = this.getGraphics();
-		g.setColor(Color.red);
-//		g.drawPolygon();
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		for(Shape s : shapes) {
+			s.draw(g, color);
+		}
+		
 	}
 
 }
