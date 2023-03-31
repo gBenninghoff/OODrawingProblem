@@ -6,5 +6,4 @@
  *
  */
 module OOPProject {
-	requires java.desktop;
 }
