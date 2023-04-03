@@ -58,7 +58,6 @@ public class Canvas extends JPanel {
 		this.setBackground(Color.WHITE);
 		this.addMouseListener(ml);
 		this.setLayout(null);
-		System.out.println("Hello");
 
 	}
 	
@@ -73,6 +72,8 @@ public class Canvas extends JPanel {
 //		}
 //	}
 
+	
+	//here is a comment I would like to commit
 	public void setShape(String shape) {
 		this.shape = shape;
 	}
