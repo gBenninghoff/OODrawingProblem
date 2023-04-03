@@ -74,6 +74,7 @@ public class Canvas extends JPanel {
 
 	
 	//here is a comment I would like to commit
+	//and here is another!
 	public void setShape(String shape) {
 		this.shape = shape;
 	}
