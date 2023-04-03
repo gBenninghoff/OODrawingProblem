@@ -88,4 +88,4 @@ public class Canvas extends JPanel {
 		
 	}
 
-}
+}//comment 3?
