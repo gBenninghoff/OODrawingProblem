@@ -58,6 +58,7 @@ public class Canvas extends JPanel {
 		this.setBackground(Color.WHITE);
 		this.addMouseListener(ml);
 		this.setLayout(null);
+		System.out.println("Hello");
 
 	}
 	
