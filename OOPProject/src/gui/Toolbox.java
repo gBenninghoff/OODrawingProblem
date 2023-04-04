@@ -10,6 +10,8 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class Toolbox extends JPanel {
 	
+	
+	//make any changes you want
 	@SuppressWarnings("unused")
 	private String shape;
 	@SuppressWarnings("unused")
