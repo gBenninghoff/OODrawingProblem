@@ -13,7 +13,7 @@ public class Canvas extends JPanel {
 	private BufferedImage image;
 
 	private MouseListener ml = new MouseListener() {
-
+//hello
 		@Override
 		public void mouseClicked(MouseEvent e) {
 		}
