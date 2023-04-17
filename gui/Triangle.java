@@ -2,7 +2,13 @@ package gui;
 
 import java.awt.*;
 
-public class Triangle extends Shape {
+/**
+ * @author: jonathonwelker
+ * 
+ * Class Triangle extends shape to allow a user to draw an equilateral or isosceles triangle
+ */
+
+public class Triangle extends Shape implements Drawable {
 
 	public Triangle(int x, int y, int width, int height, Color color) {
 
@@ -10,6 +16,12 @@ public class Triangle extends Shape {
 
 	}
 
+	/**
+	 * @param Graphics g: used to draw triangle
+	 * 
+	 * allows user to draw triangle using drawPolygon() that specifies the three points 
+	 * of a triangle according to the movements of the users computer mouse on canvas
+	 */
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(getColor());

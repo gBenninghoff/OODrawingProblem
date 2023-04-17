@@ -6,7 +6,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 //import java.awt.Graphics2D;
 
-public class Line {
+
+/**
+ * @author: jonathonwelker
+ * 
+ * Class Line creates allows a user to draw a straight line
+ * using two x/y coordinates that are received by the constructor
+ */
+public class Line implements Drawable{
 
 	private int x1;
 	private int x2;
@@ -15,6 +22,14 @@ public class Line {
 	private Color color;
 	private int strokeSize;
 
+	/**
+	 * @param int x1, int y1, int x2, int y2 serve as the pair of x/y coordinates by which the
+	 * line is drawn
+	 * @param Color color: specifies color of the line
+	 * @param int strokeSize: thickness of the line
+	 * 
+	 * constructor that initializes its parameter values
+	 */
 	public Line(int x1, int y1, int x2, int y2, Color color, int strokeSize) {
 
 		this.x1 = x1;
@@ -26,6 +41,8 @@ public class Line {
 
 	}
 
+	//getters and setters for each variable initialized by constructor
+	
 	public int getX1() {
 		return x1;
 	}
@@ -58,6 +75,12 @@ public class Line {
 		this.y2 = y2;
 	}
 
+	/**
+	 * @param Graphics g: used to draw line
+	 * 
+	 * allows user to draw a line using the paramters set by the constuctor or
+	 * modified with the getters and setters
+	 */
 	public void draw(Graphics g) {
 
 		Graphics2D g2 = (Graphics2D) g;

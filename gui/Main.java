@@ -1,8 +1,19 @@
 package gui;
+//Jonathan Welker; Gabe Benninghoff | April 17, 2023
+//This project was meant to create a paint application GUI that allows
+//a user to draw and save different kinds of shapes
+// All code in this project is entirely original | Jon Welker
 
 import java.awt.Color;
 
+
 import javax.swing.JPanel;
+
+/**
+ * @author: jonathonwelker
+ * 
+ * Class Main initializes canvas and toolbox onto a customized jframe (myframe)
+ */
 
 public class Main {
 	
