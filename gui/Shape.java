@@ -3,6 +3,14 @@ package gui;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * @author: jonathonwelker
+ * 
+ * Abstract Class shape creates a framework for any specified shape by creating
+ * a storage for its x/y coordinates and its width and height, as well as an abstract method
+ * draw() that an inherited shape can implement
+ * 
+ */
 public abstract class Shape {
 
 	private int x;
@@ -11,6 +19,15 @@ public abstract class Shape {
 	private int height;
 	private Color color;
 
+	/**
+	 * @param int x & int y: x and y coordinates of the shape drawn
+	 * according tthe location of the mouse on canvas
+	 * @param int width & int height: store the langth and width of whatever 
+	 * shapes is drawn
+	 * @param Color color: store the color of the drawn shape
+	 * 
+	 * constructor to inilize all variables
+	 */
 	public Shape(int x, int y, int width, int height, Color color) {
 		
 		this.x = x;
@@ -20,6 +37,8 @@ public abstract class Shape {
 		this.color = color;
 	}
 
+	//getters and setters for each variable initialized in the constructor--no javadocs needed
+	
 	public int getX() {
 		return x;
 	}

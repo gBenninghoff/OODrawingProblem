@@ -4,6 +4,14 @@ import java.awt.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
+
+/**
+ * @author: jonathonwelker
+ * 
+ * Class MyFrame extends JFrame to create a customized frame with 
+ * an overlaid panel to effectively allow programmer to 
+ * add multiple components to the frame
+ */
 public class MyFrame extends JFrame { // Main Frame
 	
 	private JPanel mainPanel = new JPanel();
@@ -24,6 +32,11 @@ public class MyFrame extends JFrame { // Main Frame
 		
 	}
 	
+	/**
+	 * @param Component comp
+	 * 
+	 * adds a component to the panel sitting on top of the frame
+	 */
 	public void addComponent(Component comp) {
 		mainPanel.add(comp);
 	}

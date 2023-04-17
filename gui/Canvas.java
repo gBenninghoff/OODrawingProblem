@@ -3,14 +3,22 @@ package gui;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+
 @SuppressWarnings("serial")
+
+/**
+ * @author jonathonwelker
+ * The canvas class extends JPanel to create a drawing pane,
+ * along with methods and mouse listeners to receive input from the toolbox
+ * and draw a specified figure onto the pane
+ */
+
 public class Canvas extends JPanel {
 
 	private String figure = "Draw";
@@ -25,6 +33,7 @@ public class Canvas extends JPanel {
 	private int strokeSize;
 
 	private MouseListener mouseListener = new MouseListener() {
+		
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -35,6 +44,16 @@ public class Canvas extends JPanel {
 		public void mousePressed(MouseEvent e) {
 
 		}
+		
+		/**
+		 * @param MouseEvent e: event that represents the release of the mouse
+		 * 
+		 * Sets the currLine, currShape, and currDraw to null once the mouse is released
+		 * from drawing whatever figure it was drawing
+		 * 
+		 * This is to make space for a new current figure that will initialize when the mouse 
+		 * is dragged
+		 */
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
@@ -44,11 +63,23 @@ public class Canvas extends JPanel {
 			currDraw = null;
 
 		}
+		
+		/**
+		 * @param MouseEvent e: event that represents the entering of the mouse onto canvas
+		 * 
+		 * sets cursor to crosshair once this happens
+		 */
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		}
+		
+		/**
+		 * @param MouseEvent e: event that represents the exit of the mouse from canvas
+		 * 
+		 * reverts to default mouse
+		 */
 
 		@Override
 		public void mouseExited(MouseEvent e) {
@@ -59,10 +90,19 @@ public class Canvas extends JPanel {
 
 	MouseMotionListener mouseMotionListener = new MouseMotionListener() {
 
+		
+		/**
+		 * @param MouseEvent e: event that represents the mouse being clicked
+		 * and dragged across the canvas
+		 * 
+		 * Mouse dragged will either initialize whatever shape is set (by the the buttons from class
+		 * toolbox), or manipulate the dimensions of the shape based on the direction of the mouse
+		 */
+		
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
-			if (figure != null) {
+			if (figure != null) { //if no shape has been selected, then initialize shape
 
 				if (currShape == null && currLine == null && currDraw == null) {
 
@@ -106,7 +146,8 @@ public class Canvas extends JPanel {
 						break;
 
 					}
-				} else {
+
+				} else { //if a shape has already been initialized
 
 					if (figure.equals("Circle") || figure.equals("Square")) {
 
@@ -115,22 +156,22 @@ public class Canvas extends JPanel {
 						int x;
 						int y;
 
-						if (e.getX() < centerX && e.getY() < centerY) {
+						if (e.getX() < centerX && e.getY() < centerY) { //mouse moving northwest
 
 							x = e.getX();
 							y = e.getY();
 
-						} else if (e.getX() < centerX && e.getY() > centerY) {
+						} else if (e.getX() < centerX && e.getY() > centerY) { //southwest
 
 							x = e.getX();
 							y = e.getY() - height;
 
-						} else if (e.getX() > centerX && e.getY() < centerY) {
+						} else if (e.getX() > centerX && e.getY() < centerY) { //northeast
 
 							x = centerX;
 							y = centerY - height;
 
-						} else {
+						} else { //southeast
 
 							x = centerX;
 							y = centerY;
@@ -181,16 +222,34 @@ public class Canvas extends JPanel {
 
 	};
 
+	/**
+	 * @param String figure: a string that represents the state of the figure
+	 * 
+	 * sets state of String variable figure to draw, triangle, square, circle, or line, or will 
+	 * throw an error if receives another input
+	 */
 	public void setFigure(String figure) {
-		this.figure = figure;
+		if (figure.equals("Draw") || figure.equals("Square") || figure.equals("Triangle") || figure.equals("Line")
+				|| figure.equals("Circle")) {
+			this.figure = figure;
+		} else {
+			throw new RuntimeException("Invalid Figure");
+		}
 	}
 
+	/**
+	 * clears the canvas by clearing the stack of figures, and repainting nothing
+	 */
 	public void clear() {
 		figureList.clear();
 		repaint();
 		index = -1;
 	}
 
+	/**
+	 * "pops" the top figure off of the figure stack and repainting, thus undoing the most
+	 * previous figure drawn
+	 */
 	public void undo() {
 
 		try {
@@ -207,40 +266,85 @@ public class Canvas extends JPanel {
 		}
 	}
 
+	/**
+	 * @return Color
+	 * 
+	 * returns current color of the canvas variable color, used to color figures being drawn
+	 */
 	public Color getColor() {
 		return color;
 	}
 
+	/**
+	 * @param Color color
+	 * 
+	 * sets the state of the color varibale color, using the input parameter
+	 */
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+
+	/**
+	 * overloads setColor by having a signature w/out parameters, which allows you
+	 * to choose a color using a jcolorchooser
+	 */
 	public void setColor() {
 		this.color = JColorChooser.showDialog(null, "Pick Color", Color.BLACK);
 	}
 
+	/**
+	 * @return int
+	 * 
+	 * returns the stroke size set by the toolbox
+	 */
 	public int getStrokeSize() {
 		return strokeSize;
 	}
 
+	/**
+	 * @param int strokeSize
+	 * 
+	 * uses the int parameter to set the variable strokesize
+	 */
 	public void setStrokeSize(int strokeSize) {
 		this.strokeSize = strokeSize;
 	}
-	
-	public void saveImage() throws IOException {
 
-		String type = "png";
+	/**
+	 * saves the canvas and all its drawings onto a buffered image that is exported
+	 * as a png using jfilechooser
+	 */
+	public void saveImage() {
 
 		BufferedImage imageExport = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics g = imageExport.getGraphics();
 		this.paint(g);
-		String path = "/Users/jonathonwelker/desktop/picture." + type;
 
-		ImageIO.write(imageExport, type, new File(path));
+		JFileChooser fileChooser = new JFileChooser();
+
+		int saveValue = fileChooser.showSaveDialog(null);
+
+		if (saveValue == JFileChooser.APPROVE_OPTION) {
+
+			try {
+				ImageIO.write(imageExport, "png", fileChooser.getSelectedFile());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
+	
+	/**
+	 * @param Graphics g: used to draw specified figure
+	 * 
+	 * draws a specified shape using graphics input as well as the shapes draw method
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
+
+		// for (Drawable d: figureList)
+
 		for (Object obj : figureList) {
 			if (obj instanceof Shape) {
 				((Shape) obj).draw(g);

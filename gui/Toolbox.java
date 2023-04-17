@@ -3,27 +3,62 @@ package gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.*;
 
 @SuppressWarnings("serial")
+
+/**
+ * @author; jonathonwelker
+ * 
+ * Class Toolbox is meant to store all of the buttons that maniulate what
+ * figure is drawn by the canvas and what color it will be, as well as actions
+ * to save the figure onto a file
+ */
 public class Toolbox extends JPanel {
 
 	@SuppressWarnings("unused")
-	private String shape;
-	@SuppressWarnings("unused")
 	private Canvas canvas;
 	private int strokeSize = 1;
-
+	
+	
+	/**
+	 * @return: int 
+	 * 
+	 * returns the stroke size from Toolbox so that it can be called & communicated 
+	 * to class Canvas for drawing
+	 */
 	public int getStrokeSize() {
 		return strokeSize;
 	}
 
+	/**
+	 * @param int strokeSize 
+	 * 
+	 * sets the value of strokesize to any int >= 1,
+	 * or warns the user that you cannot have stroke size of zero
+	 */
 	public void setStrokeSize(int strokeSize) {
-		this.strokeSize = strokeSize;
+		if (strokeSize < 1) {
+			JFrame warningFrame = new JFrame();
+			warningFrame.setBounds(100, 100, 210, 50);
+			JLabel warningLabel = new JLabel("STROKE SIZE CANNOT BE 0 px");
+			warningLabel.setBounds(0, 0, 200, 45);
+			warningFrame.add(warningLabel);
+			warningFrame.setVisible(true);
+		} else {
+			this.strokeSize = strokeSize;
+		}
 	}
 
+	/**
+	 * @param Canvas canvas: input canvas for constructor to allow for communication between 
+	 * the two class
+	 * 
+	 * constructor for class Toolbox that initialized and organizes all of the buttons that allow a user
+	 * to set the shape (like triangle), set the color (like blueButton) or engae in an
+	 * action (like undo or clear or save)
+	 */
 	public Toolbox(Canvas canvas) {
 
 		super();
@@ -140,6 +175,13 @@ public class Toolbox extends JPanel {
 
 		ActionListener operationListener = new ActionListener() {
 
+			
+			/**
+			 * @param ActionEvent e: event that represents the a button being clicked
+			 * 
+			 * this actionlistener is for the "action" buttons (undo, save, clear, and setting stroke
+			 * up or down) and calls their corresponding methods in Canvas
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -148,28 +190,15 @@ public class Toolbox extends JPanel {
 				} else if (e.getSource() == clearButton) {
 					canvas.clear();
 				} else if (e.getSource() == saveButton) {
-					try {
-						canvas.saveImage();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+					canvas.saveImage();
 				} else if (e.getSource() == upButton) {
 					setStrokeSize(getStrokeSize() + 1);
 					label.setText("Stroke Size (px): " + getStrokeSize());
 					canvas.setStrokeSize(getStrokeSize());
 				} else {
-					if (getStrokeSize() - 1 < 1) {
-						JFrame warningFrame = new JFrame();
-						warningFrame.setBounds(100, 100, 210, 50);
-						JLabel warningLabel = new JLabel("STROKE SIZE CANNOT BE 0 px");
-						warningLabel.setBounds(0, 0, 200, 45);
-						warningFrame.add(warningLabel);
-						warningFrame.setVisible(true);
-					} else {
-						setStrokeSize(getStrokeSize() - 1);
-						label.setText("Stroke Size (px): " + getStrokeSize());
-						canvas.setStrokeSize(getStrokeSize());
-					}
+					setStrokeSize(getStrokeSize() - 1);
+					label.setText("Stroke Size (px): " + getStrokeSize());
+					canvas.setStrokeSize(getStrokeSize());
 				}
 
 			}
@@ -178,6 +207,13 @@ public class Toolbox extends JPanel {
 
 		ActionListener colorListener = new ActionListener() {
 
+			/**
+			 * @param ActionEvent e: event that represents the a button being clicked
+			 * 
+			 * this actionlistener calls setColor() on canvas to the background color of whatever
+			 * color button is clicked. If customer color button is clicked, then 
+			 * a jcolorchooser is initialized on class canvas to determine the color
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == colorButton) {
@@ -198,9 +234,15 @@ public class Toolbox extends JPanel {
 			}
 
 		};
-		
+
 		ActionListener figureListener = new ActionListener() {
 
+			/**
+			 * @param ActionEvent e: event that represents the a button being clicked
+			 * 
+			 * this actionlistener is for setting the shape variable of canvas to its
+			 * corresponding shape button here on toolbox
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -215,9 +257,9 @@ public class Toolbox extends JPanel {
 				} else {
 					canvas.setFigure("Line");
 				}
-				
+
 			}
-			
+
 		};
 
 		circleButton.addActionListener(figureListener);
@@ -225,13 +267,13 @@ public class Toolbox extends JPanel {
 		triangleButton.addActionListener(figureListener);
 		lineButton.addActionListener(figureListener);
 		drawButton.addActionListener(figureListener);
-		
+
 		undoButton.addActionListener(operationListener);
 		clearButton.addActionListener(operationListener);
 		saveButton.addActionListener(operationListener);
 		upButton.addActionListener(operationListener);
 		downButton.addActionListener(operationListener);
-		
+
 		colorButton.addActionListener(colorListener);
 		blueButton.addActionListener(colorListener);
 		yellowButton.addActionListener(colorListener);
